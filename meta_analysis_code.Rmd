@@ -1,0 +1,131 @@
+---
+title: "Meta-Analysis: Race and ethnicity and the risk of community-acquired third-generation cephalosporin-resistant uropathogens"
+author: "Sweta Balaji"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Load Packages
+```{r}
+library(meta)
+library(grid)
+```
+
+
+### Hispanic/Latinx persons vs. White persons
+
+#### Data Frame
+Use effect measures provided in "effect_measures.xlsx" file.
+
+```{r}
+data<-data.frame(
+  study=c("Raphael et al. 2021","Zhu et al. 2019","Mark et al. 2021"), #specify study names
+  TE=log(c(1.52,0.827631579,1.236601467)), #input risk ratios (provided in study or calculated in Excel)
+  seTE=c(0.218346583,0.45879072,0.120959542) # input standard errors (calculated in Excel)
+)
+```
+
+
+#### Pooled Analysis
+
+```{r}
+meta<-metagen(
+  TE=data$TE,
+  seTE=data$seTE,
+  studlab=data$study,
+  sm="RR",
+  common = FALSE,
+  random = TRUE,
+  title="Latinx/Hispanic vs. White"
+)
+
+meta
+
+```
+#### Forest Plot
+
+```{r}
+forest(meta, xlim=c(0.3,2.5))
+
+```
+
+
+### Black/African American persons vs. White persons
+
+#### Data Frame
+
+```{r}
+data<-data.frame(
+  study=c("Raphael et al. 2021","Collingwood et al. 2023","Zhu et al. 2019", "Mark et al. 2021"),
+  TE=log(c(0.83,1.010116025,0.801857585,1.170570342)),
+  seTE=c(0.237642399,0.190807869,0.395927472,0.193572925))
+```
+
+
+#### Pooled Analysis
+
+```{r}
+meta<-metagen(
+  TE=data$TE,
+  seTE=data$seTE,
+  studlab=data$study,
+  sm="RR",
+  common = FALSE,
+  random = TRUE,
+  title="Black/African American vs. White/Caucasian"
+)
+
+meta
+```
+
+#### Forest Plot
+
+```{r}
+forest(meta, xlim=c(0.3,2.5))
+```
+
+
+
+### Asian persons vs. White persons
+
+
+#### Data Frame
+
+```{r}
+data<-data.frame(
+  study=c("Raphael et al. 2021","Collingwood et al. 2023","Mark et al. 2021"),
+  TE=log(c(0.96,5.780376868,1.41965391)),
+  seTE=c(0.221958645,0.413697532,0.129639843))
+```
+
+
+
+#### Pooled Analysis
+
+```{r}
+meta<-metagen(
+  TE=data$TE,
+  seTE=data$seTE,
+  studlab=data$study,
+  sm="RR",
+  common = FALSE,
+  random = TRUE,
+  title="Asian vs. White"
+)
+
+meta
+```
+
+
+#### Forest Plot
+
+```{r}
+forest(meta, xlim=c(0.3,2.5))
+```
+
